@@ -5,4 +5,4 @@ from django.apps import AppConfig
 
 
 class MyDirectoryConfig(AppConfig):
-    name = 'contact'
+    name = 'contacts'
