@@ -17,8 +17,8 @@ class Contact(models.Model):
 
 
 class Address(models.Model):
-    HOME = 'Home'
-    OFFICE = 'Office'
+    HOME = 'home'
+    OFFICE = 'office'
 
     ADDRESS_CHOICES = (
         (HOME, 'Home Address'),
