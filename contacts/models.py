@@ -24,9 +24,9 @@ class Address(models.Model):
         (HOME, 'Home Address'),
         (OFFICE, 'Office Address'),
     )
-    
+
     contact = models.ForeignKey(Contact)
-    address_selection = models.CharField(max_length=5, choices=ADDRESS_CHOICES, default=HOME)
+    address_selection = models.CharField(max_length=6, choices=ADDRESS_CHOICES, default=HOME)
     address_line = models.CharField(max_length=50)
     city = models.CharField(max_length=15)
     state = models.CharField(max_length=15)
