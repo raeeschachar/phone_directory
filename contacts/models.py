@@ -17,12 +17,17 @@ class Contact(models.Model):
 
 
 class Address(models.Model):
-    address = models.ForeignKey(Contact, on_delete=models.CASCADE)
-    address_line = models.TextField(max_length=50)
-    city = models.TextField(max_length=15)
-    state = models.TextField(max_length=15)
-    zip = models.TextField(max_length=15)
-    country = models.TextField(max_length=20)
+    ADDRESS_CHOICES = (
+        ('HOME', 'Home Address'),
+        ('OFFICE', 'Office Address'),
+    )
+    contact = models.ForeignKey(Contact)
+    address_selection = models.CharField(max_length=2, choices=ADDRESS_CHOICES, default='HOME')
+    address_line = models.CharField(max_length=50)
+    city = models.CharField(max_length=15)
+    state = models.CharField(max_length=15)
+    zip_code = models.CharField(max_length=15)
+    country = models.CharField(max_length=20)
 
     def __str__(self):
         return self.country
