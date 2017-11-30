@@ -1,0 +1,18 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'contacts/style.css' %}" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Contacts</title>
+</head>
+<body>
+<h1>My Contact List</h1>
+
+    {% for name in my_contacts %}
+        <li>{{ name }}</li>
+    {% endfor %}
+
+</body>
+</html>
