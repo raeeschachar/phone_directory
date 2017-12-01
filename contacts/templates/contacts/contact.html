@@ -1,4 +1,4 @@
-{% load static %}
+{% load staticfiles %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'contacts/style.css' %}" />
 <!DOCTYPE html>
@@ -8,10 +8,10 @@
     <title>My Contacts</title>
 </head>
 <body>
-<h1>My Contact List</h1>
+<h1>My Contacts</h1>
 
     {% for name in my_contacts %}
-        <li>{{ name }}</li>
+        <li><a href="{% url 'contacts:detail' name.id %}">{{ name }}</a></li>
     {% endfor %}
 
 </body>
