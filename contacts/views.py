@@ -27,7 +27,7 @@ class ContactView(generic.ListView):
 
 def detail(request, contact_id):
     contact_details = Contact.objects.get(id=contact_id)
-    address_details = Address.objects.get(id=contact_id)
+    address_details = Address.objects.get(id=contact_details.id)
     return render(request, 'contacts/detail.html', {
         'contact_details': contact_details, 'address_details': address_details
     })

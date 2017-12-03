@@ -1,17 +1,17 @@
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'contacts/style.css' %}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'contacts/style.css' %}" />
     <title>My Contacts</title>
 </head>
 <body>
 <h1>My Contacts</h1>
 
-    {% for name in my_contacts %}
-        <li><a href="{% url 'contacts:detail' name.id %}">{{ name }}</a></li>
+    {% for contact in my_contacts %}
+        <li><a href="{% url 'contacts:detail' contact.id %}">{{ contact }}</a></li>
     {% endfor %}
 
 </body>
