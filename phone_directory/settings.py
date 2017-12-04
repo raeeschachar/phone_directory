@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'contacts',
+    'contacts.apps.MyDirectoryConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

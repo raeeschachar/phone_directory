@@ -1,0 +1,10 @@
+{% extends "contacts/layout.html" %}
+
+{% block content %}
+<h1>My Contacts</h1>
+
+    {% for contact in my_contacts %}
+        <li><a href="{% url 'contacts:detail' contact.id %}">{{ contact }}</a></li>
+    {% endfor %}
+
+{% endblock %}
