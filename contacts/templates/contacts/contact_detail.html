@@ -1,0 +1,14 @@
+{% extends "contacts/layout.html" %}
+
+{% block content %}
+    <h1>{{ object.name }}</h1>
+    <p><b>Email: </b>{{ object.email }}</p>
+    <p><b>Phone: </b>{{ object.phone_number }}</p>
+
+    {% for address in object.address_set.all %}
+        <p><b>Address: </b>
+            {{ address.address_line }}, {{ address.city }},
+            {{ address.state }}, {{ address.zip_code }}</p>
+        <p><b>Country: </b>{{ address.country }}</p>
+    {% endfor %}
+{% endblock %}
