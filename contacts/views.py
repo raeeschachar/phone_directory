@@ -1,5 +1,6 @@
 from django.views import generic
 from .models import Contact
+from .forms import AddContactForm
 
 
 class ContactsListView(generic.ListView):
@@ -9,3 +10,8 @@ class ContactsListView(generic.ListView):
 
 class ContactDetailView(generic.DetailView):
     model = Contact
+
+
+class AddContactView(generic.CreateView):
+    model = Contact
+    fields = '__all__'
