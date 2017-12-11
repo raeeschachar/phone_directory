@@ -3,10 +3,9 @@
 {% block content %}
 <h1>My Contacts</h1>
 
+    <a href="{% url 'contacts:add_contact' %}">Add Contact</a>
     {% for contact in my_contacts %}
         <li><a href="{% url 'contacts:detail' contact.id %}">{{ contact }}</a></li>
     {% endfor %}
-    
-    <a href="/contacts/add_contact">Add Contact</a>
 
 {% endblock %}

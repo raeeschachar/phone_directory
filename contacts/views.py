@@ -15,5 +15,3 @@ class ContactDetailView(generic.DetailView):
 class AddContactView(CreateView):
     model = Contact
     fields = ['name', 'email', 'phone_number']
-
-    success_url = "/contacts"

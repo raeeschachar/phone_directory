@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from django.urls import reverse
 
 
 class Contact(models.Model):
@@ -14,6 +15,9 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('contacts:contact')
 
 
 class Address(models.Model):
