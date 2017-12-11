@@ -1,6 +1,5 @@
 from django.views import generic
 from .models import Contact
-from django.views.generic.edit import CreateView
 
 
 class ContactsListView(generic.ListView):
@@ -12,6 +11,6 @@ class ContactDetailView(generic.DetailView):
     model = Contact
 
 
-class AddContactView(CreateView):
+class AddContactView(generic.CreateView):
     model = Contact
     fields = ['name', 'email', 'phone_number']
