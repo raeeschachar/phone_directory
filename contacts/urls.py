@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^$', views.ContactsListView.as_view(), name='contact'),
     url(r'^(?P<pk>[0-9]+)/?$', views.ContactDetailView.as_view(), name='detail'),
     url(r'^add_contact/?$', views.AddContactView.as_view(), name='add_contact'),
+    url(r'^add_address/?$', views.AddContactAddressView.as_view(), name='add_address'),
 ]

@@ -1,5 +1,5 @@
 from django.views import generic
-from .models import Contact
+from .models import Contact, Address
 
 
 class ContactsListView(generic.ListView):
@@ -14,3 +14,8 @@ class ContactDetailView(generic.DetailView):
 class AddContactView(generic.CreateView):
     model = Contact
     fields = ['name', 'email', 'phone_number']
+
+
+class AddContactAddressView(generic.CreateView):
+    model = Address
+    fields = ['contact', 'address_selection', 'address_line', 'city', 'state', 'zip_code', 'country']

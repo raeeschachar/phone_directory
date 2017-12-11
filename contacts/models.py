@@ -39,3 +39,6 @@ class Address(models.Model):
 
     def __str__(self):
         return self.country
+
+    def get_absolute_url(self):
+        return reverse('contacts:contact')
