@@ -1,8 +1,0 @@
-<form method="POST" enctype="multipart/form-data" class="{{ form_classes|default:'form' }}" novalidate>
-        {% csrf_token %}
-        <fieldset class="module aligned">
-{{ form.as_p }}
-</fieldset>
-
-    <input type="submit" value="Submit"/>
-</form>
