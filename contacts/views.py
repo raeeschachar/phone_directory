@@ -19,3 +19,4 @@ class AddContactView(generic.CreateView):
 class AddContactAddressView(generic.CreateView):
     model = Address
     fields = ['contact', 'address_selection', 'address_line', 'city', 'state', 'zip_code', 'country']
+    template_name = 'contacts/contact_form.html'
