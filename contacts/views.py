@@ -9,3 +9,8 @@ class ContactsListView(generic.ListView):
 
 class ContactDetailView(generic.DetailView):
     model = Contact
+
+
+class AddContactView(generic.CreateView):
+    model = Contact
+    fields = ['name', 'email', 'phone_number']
