@@ -6,7 +6,7 @@
     {% for contact in my_contacts %}
         <li><a href="{% url 'contacts:detail' contact.id %}">{{ contact }}</a></li>
     {% endfor %}
-
-    <p><button action="" type="submit">Add Contact</button></p>
+    
+    <a href="/contacts/add_contact">Add Contact</a>
 
 {% endblock %}

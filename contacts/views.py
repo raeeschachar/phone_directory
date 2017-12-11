@@ -1,6 +1,6 @@
 from django.views import generic
 from .models import Contact
-from .forms import AddContactForm
+from django.views.generic.edit import CreateView
 
 
 class ContactsListView(generic.ListView):
@@ -12,6 +12,8 @@ class ContactDetailView(generic.DetailView):
     model = Contact
 
 
-class AddContactView(generic.CreateView):
+class AddContactView(CreateView):
     model = Contact
-    fields = '__all__'
+    fields = ['name', 'email', 'phone_number']
+
+    success_url = "/contacts"
