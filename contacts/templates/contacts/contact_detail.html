@@ -1,6 +1,7 @@
 {% extends "contacts/layout.html" %}
 
 {% block content %}
+    <p><a href="{% url 'contacts:update_contact' pk=object.id %}">Update Contact</a></p>
     <h1>{{ object.name }}</h1>
     <p><b>Email: </b>{{ object.email }}</p>
     <p><b>Phone: </b>{{ object.phone_number }}</p>
@@ -10,5 +11,7 @@
             {{ address.address_line }}, {{ address.city }},
             {{ address.state }}, {{ address.zip_code }}</p>
         <p><b>Country: </b>{{ address.country }}</p>
+        <p><a href="{% url 'contacts:update_contact_address' pk=address.id %}">
+            Update Contact's {{ address.address_selection }} Address</a></p>
     {% endfor %}
 {% endblock %}
