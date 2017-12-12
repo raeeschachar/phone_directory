@@ -1,5 +1,6 @@
+from django.urls import reverse_lazy
 from django.views import generic
-from .models import Contact
+from .models import Contact, Address
 
 
 class ContactsListView(generic.ListView):
@@ -14,3 +15,10 @@ class ContactDetailView(generic.DetailView):
 class AddContactView(generic.CreateView):
     model = Contact
     fields = ['name', 'email', 'phone_number']
+    success_url = reverse_lazy('contacts:contact')
+
+
+class AddContactAddressView(generic.CreateView):
+    model = Address
+    fields = ['contact', 'address_selection', 'address_line', 'city', 'state', 'zip_code', 'country']
+    success_url = reverse_lazy('contacts:contact')
