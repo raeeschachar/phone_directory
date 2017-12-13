@@ -1,5 +1,9 @@
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
-from django.views import generic
+from django.views import generic, View
+
+from contacts.forms import NewContactForm
 from .models import Contact, Address
 
 
@@ -12,10 +16,38 @@ class ContactDetailView(generic.DetailView):
     model = Contact
 
 
-class AddContactView(generic.CreateView):
-    model = Contact
-    fields = ['name', 'email', 'phone_number']
-    success_url = reverse_lazy('contacts:contact')
+class AddContactView(View):
+    form_class = NewContactForm
+    template_name = 'contacts/contact_form.html'
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('contacts:contact'))
+        return render(request, self.template_name, {'form': form})
+
+
+"""This one works too"""
+# def add_contact_view(request):
+#     if request.method == 'POST':
+#         form = NewContactForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#         return HttpResponseRedirect(reverse('contacts:contact'))
+#     else:
+#         form = NewContactForm()
+#         return render(request, 'contacts/contact_form.html', {'form': form})
+
+"""This one works too"""
+# class AddContactView(generic.CreateView):
+#     model = Contact
+#     fields = ['name', 'email', 'phone_number']
+#     success_url = reverse_lazy('contacts:contact')
 
 
 class AddContactAddressView(generic.CreateView):
