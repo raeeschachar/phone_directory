@@ -1,5 +1,7 @@
 from django.conf.urls import url
 
+from phone_directory import settings
+from django.views.static import serve
 from . import views
 
 
@@ -14,3 +16,8 @@ urlpatterns = [
         views.UpdateContactAddressView.as_view(), name='update_contact_address'
         )
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})
+    ]

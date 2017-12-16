@@ -5,6 +5,7 @@
     <h1>{{ object.name }}</h1>
     <p><b>Email: </b>{{ object.email }}</p>
     <p><b>Phone: </b>{{ object.phone_number }}</p>
+    <p><b>Image: </b><img src="{{ object.contact_image }}" height="100"></p>
 
     {% for address in object.address_set.all %}
         <p><b><i>Address {{ address.address_selection }}:</i></b>

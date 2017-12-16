@@ -58,7 +58,7 @@ class AddContactAddressView(generic.CreateView):
 
 class UpdateContactView(generic.UpdateView):
     model = Contact
-    fields = ['name', 'email', 'phone_number']
+    fields = ['name', 'email', 'phone_number', 'contact_image']
 
     def get_success_url(self):
         return reverse('contacts:detail', kwargs={'pk': self.get_object().id})

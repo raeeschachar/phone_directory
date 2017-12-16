@@ -6,4 +6,4 @@ from contacts.models import Contact
 class NewContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = ['name', 'email', 'phone_number']
+        fields = ['name', 'email', 'phone_number', 'contact_image']
