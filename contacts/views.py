@@ -70,3 +70,15 @@ class UpdateContactAddressView(generic.UpdateView):
 
     def get_success_url(self):
         return reverse('contacts:detail', kwargs={'pk': self.get_object().contact.id})
+
+
+class DeleteContactView(View):
+    template_name = "contacts/delete_contact.html"
+
+    def get(self, request, pk):
+        return render(request, self.template_name, {'object': Contact.objects.get(id=pk)})
+
+    def post(self, request, pk):
+        contact = Contact.objects.get(id=pk)
+        contact.delete()
+        return HttpResponseRedirect(reverse('contacts:contact'))

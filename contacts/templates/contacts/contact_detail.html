@@ -15,4 +15,6 @@
         <p><a href="{% url 'contacts:update_contact_address' pk=address.id %}">
             Update Contact's {{ address.address_selection }} Address</a></p>
     {% endfor %}
+
+    <a href="{% url "contacts:delete_contact" pk=object.id %}">Delete</a>
 {% endblock %}
