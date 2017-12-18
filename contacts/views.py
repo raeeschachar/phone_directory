@@ -25,7 +25,7 @@ class AddContactView(View):
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('contacts:contact'))
@@ -58,7 +58,7 @@ class AddContactAddressView(generic.CreateView):
 
 class UpdateContactView(generic.UpdateView):
     model = Contact
-    fields = ['name', 'email', 'phone_number']
+    fields = ['name', 'email', 'phone_number', 'contact_image']
 
     def get_success_url(self):
         return reverse('contacts:detail', kwargs={'pk': self.get_object().id})

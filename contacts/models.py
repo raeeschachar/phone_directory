@@ -11,6 +11,7 @@ class Contact(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=30)
     phone_number = models.CharField(validators=[phone_regex], max_length=20, blank=True)
+    contact_image = models.ImageField(upload_to='contacts_images', default='contacts_images/default.png')
 
     def __str__(self):
         return self.name
