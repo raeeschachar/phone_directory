@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^update_contact_address/(?P<pk>[0-9]+)/?$',
         views.UpdateContactAddressView.as_view(), name='update_contact_address'
         ),
-    url(r'^delete/(?P<pk>\d+)$', views.DeleteContactView.as_view(), name='delete_contact')
+    url(r'^delete/(?P<pk>\d+)/?$', views.DeleteContactView.as_view(), name='delete_contact')
 ]
