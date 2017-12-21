@@ -1,9 +1,10 @@
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views import generic, View
 
-from contacts.forms import NewContactForm
+from contacts.forms import NewContactForm, LoginForm
 from .models import Contact, Address
 
 
@@ -82,3 +83,37 @@ class DeleteContactView(View):
         contact = Contact.objects.get(id=pk)
         contact.delete()
         return HttpResponseRedirect(reverse('contacts:contact'))
+
+
+class LoginView(View):
+    form_class = LoginForm
+    template_name = 'contacts/login.html'
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            un = form.cleaned_data['username']
+            pw = form.cleaned_data['password']
+            user = authenticate(username=un, password=pw)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect(reverse('contacts:contact'))
+                else:
+                    print("Invalid account")
+            else:
+                print("The username and password were incorrect")
+        else:
+            form = LoginForm()
+            return render(request, self.template_name, {'form': form})
+
+
+class HomePageView(View):
+    template_name = 'contacts/home.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
