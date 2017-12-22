@@ -28,7 +28,9 @@ class AddContactView(View):
     def post(self, request):
         form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            contact = form.save(commit=False)
+            contact.user = request.user
+            contact.save()
             return HttpResponseRedirect(reverse('contacts:contact'))
         return render(request, self.template_name, {'form': form})
 
@@ -99,20 +101,28 @@ class LoginView(View):
             un = form.cleaned_data['username']
             pw = form.cleaned_data['password']
             user = authenticate(username=un, password=pw)
-            if user is not None:
+            if user:
                 if user.is_active:
                     login(request, user)
                     return HttpResponseRedirect(reverse('contacts:contact'))
                 else:
                     print("Invalid account")
+                    return HttpResponseRedirect(reverse('contacts:user_login'))
             else:
                 print("The username and password were incorrect")
+                return HttpResponseRedirect(reverse('contacts:user_login'))
         else:
-            form = LoginForm()
             return render(request, self.template_name, {'form': form})
 
 
 class HomePageView(View):
+    template_name = 'contacts/home.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+
+class LogoutView(View):
     template_name = 'contacts/home.html'
 
     def get(self, request):

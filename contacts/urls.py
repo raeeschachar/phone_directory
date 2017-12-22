@@ -15,5 +15,6 @@ urlpatterns = [
         views.UpdateContactAddressView.as_view(), name='update_contact_address'
         ),
     url(r'^delete/(?P<pk>\d+)/?$', views.DeleteContactView.as_view(), name='delete_contact'),
-    url(r'^login/?$', views.LoginView.as_view(), name='user_login')
+    url(r'^login/?$', views.LoginView.as_view(), name='user_login'),
+    url(r'^logout/?$', views.LogoutView.as_view(), name='logout')
 ]

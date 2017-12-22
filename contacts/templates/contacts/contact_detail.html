@@ -2,7 +2,7 @@
 
 {% block content %}
     <p><a href="{% url 'contacts:update_contact' pk=object.id %}">Update Contact</a></p>
-    <h1>{{ object.name }}</h1>
+    <h3>{{ object.name }}</h3>
     <p><b>Email: </b>{{ object.email }}</p>
     <p><b>Phone: </b>{{ object.phone_number }}</p>
     <p><b>Image: </b><img src="{{ object.contact_image.url }}" height="100"></p>
