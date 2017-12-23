@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
@@ -102,15 +102,11 @@ class LoginView(View):
             pw = form.cleaned_data['password']
             user = authenticate(username=un, password=pw)
             if user:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponseRedirect(reverse('contacts:contact'))
-                else:
-                    print("Invalid account")
-                    return HttpResponseRedirect(reverse('contacts:user_login'))
+                login(request, user)
+                return HttpResponseRedirect(reverse('contacts:contact'))
             else:
-                print("The username and password were incorrect")
-                return HttpResponseRedirect(reverse('contacts:user_login'))
+                return render(request, self.template_name, {'form': form, 'error_message':
+                    "Invalid Username or Password. Please try again. "})
         else:
             return render(request, self.template_name, {'form': form})
 
@@ -126,4 +122,5 @@ class LogoutView(View):
     template_name = 'contacts/home.html'
 
     def get(self, request):
+        logout(request)
         return render(request, self.template_name)
