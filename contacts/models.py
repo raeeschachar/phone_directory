@@ -9,7 +9,7 @@ class Contact(models.Model):
             message="Phone number must be entered in the format: '+999999999'. Up to 20 digits allowed."
     )
 
-    user = models.ForeignKey(User, null=True, blank=True)
+    user = models.ForeignKey(User)
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=30)
     phone_number = models.CharField(validators=[phone_regex], max_length=20, blank=True)
