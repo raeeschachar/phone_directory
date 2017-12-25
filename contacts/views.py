@@ -4,13 +4,16 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views import generic, View
 
-from contacts.forms import NewContactForm, LoginForm
+from contacts.forms import NewContactForm, LoginForm, NewAddressForm
 from .models import Contact, Address
 
 
-class ContactsListView(generic.ListView):
-    context_object_name = 'my_contacts'
-    queryset = Contact.objects.order_by('name')
+class ContactsListView(View):
+    template_name = "contacts/contact_list.html"
+
+    def get(self, request):
+        specific = Contact.objects.filter(user=request.user)
+        return render(request, self.template_name, {'specific': specific})
 
 
 class ContactDetailView(generic.DetailView):
@@ -53,10 +56,22 @@ class AddContactView(View):
 #     success_url = reverse_lazy('contacts:contact')
 
 
-class AddContactAddressView(generic.CreateView):
-    model = Address
-    fields = ['contact', 'address_selection', 'address_line', 'city', 'state', 'zip_code', 'country']
-    success_url = reverse_lazy('contacts:contact')
+class AddContactAddressView(View):
+    form_class = NewAddressForm
+    template_name = 'contacts/address_form.html'
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            address = form.save(commit=False)
+            address.user = request.user
+            address.save()
+            return HttpResponseRedirect(reverse('contacts:contact'))
+        return render(request, self.template_name, {'form': form})
 
 
 class UpdateContactView(generic.UpdateView):

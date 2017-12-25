@@ -6,7 +6,7 @@
     <p><a href="{% url 'contacts:add_contact' %}">Add Contact</a></p>
     <p><a href="{% url 'contacts:add_address' %}">Add Address Against a Contact</a></p>
     <br>
-    {% for contact in my_contacts %}
+    {% for contact in specific %}
         <li><a href="{% url 'contacts:detail' contact.id %}">{{ contact }}</a></li>
     {% endfor %}
 

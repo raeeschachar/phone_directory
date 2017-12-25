@@ -3,7 +3,7 @@ from .models import Contact, Address
 
 
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ['name', 'email', 'phone_number', 'contact_image']
+    list_display = ['name', 'email', 'phone_number', 'user']
 
 
 class AddressInline(admin.TabularInline):
