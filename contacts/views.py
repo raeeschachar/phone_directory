@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse
 from django.views import generic, View
 
 from contacts.forms import NewContactForm, LoginForm, NewAddressForm
@@ -13,7 +13,7 @@ class ContactsListView(View):
 
     def get(self, request):
         specific = Contact.objects.filter(user=request.user)
-        return render(request, self.template_name, {'specific': specific})
+        return render(request, self.template_name, {'user_specific_contacts': specific})
 
 
 class ContactDetailView(generic.DetailView):
@@ -84,7 +84,7 @@ class UpdateContactView(generic.UpdateView):
 
 class UpdateContactAddressView(generic.UpdateView):
     model = Address
-    fields = ['contact', 'address_selection', 'address_line', 'city', 'state', 'zip_code', 'country']
+    fields = ['address_selection', 'address_line', 'city', 'state', 'zip_code', 'country']
 
     def get_success_url(self):
         return reverse('contacts:detail', kwargs={'pk': self.get_object().contact.id})
