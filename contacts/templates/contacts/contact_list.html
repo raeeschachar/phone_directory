@@ -7,7 +7,7 @@
     <p><a href="{% url 'contacts:add_address' %}">Add Address Against a Contact</a></p>
     <br>
     {% for contact in user_specific_contacts %}
-        <li><a href="{% url 'contacts:detail' contact.id %}">{{ contact }}</a></li>
+        <li><a href="{% url 'contacts:contact_detail' contact.id %}">{{ contact }}</a></li>
     {% endfor %}
 
 {% endblock %}
