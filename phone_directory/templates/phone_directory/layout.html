@@ -11,14 +11,14 @@
 {% if user.is_authenticated %}
     <h2 align="middle"> User: {{ user }} </h2>
 
-    <h4 align="right"> <a href="{% url 'contacts:logout' %}">logout</a></h4>
+    <h4 align="right"> <a href="{% url 'user_sessions:logout' %}">logout</a></h4>
 </header>
 
     {% block content %}
     {% endblock %}
 
 {% else %}
-    <a href="{% url 'contacts:login' %}">login</a>
+    <a href="{% url 'user_sessions:login' %}">login</a>
 
 {% endif %}
 

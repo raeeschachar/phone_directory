@@ -1,6 +1,7 @@
-{% extends "contacts/layout.html" %}
+{% extends "phone_directory/layout.html" %}
 
 {% block content %}
+    <p><a href="{% url 'contacts:contact_list' %}">Back to Contact List</a></p>
     <p><a href="{% url 'contacts:update_contact' pk=object.id %}">Update Contact</a></p>
     <h3>{{ object.name }}</h3>
     <p><b>Email: </b>{{ object.email }}</p>
@@ -16,5 +17,5 @@
             Update Contact's {{ address.address_selection }} Address</a></p>
     {% endfor %}
 
-    <a href="{% url "contacts:delete_contact" pk=object.id %}">Delete</a>
+    <p><a href="{% url "contacts:delete_contact" pk=object.id %}">Delete</a></p>
 {% endblock %}

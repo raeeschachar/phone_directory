@@ -13,8 +13,3 @@ class NewAddressForm(forms.ModelForm):
     class Meta:
         model = Address
         fields = ['contact', 'address_selection', 'address_line', 'city', 'state', 'zip_code', 'country']
-
-
-class LoginForm(forms.Form):
-    username = forms.CharField(label='Username', max_length=50)
-    password = forms.CharField(widget=forms.PasswordInput())
