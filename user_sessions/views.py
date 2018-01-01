@@ -39,8 +39,7 @@ class HomePageView(View):
 
 
 class LogoutView(View):
-    template_name = 'phone_directory/home.html'
 
     def get(self, request):
         logout(request)
-        return render(request, self.template_name)
+        return HttpResponseRedirect(reverse('user_sessions:home'))
