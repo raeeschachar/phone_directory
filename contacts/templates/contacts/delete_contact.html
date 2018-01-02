@@ -1,10 +1,10 @@
-{% extends "contacts/layout.html" %}
+{% extends "phone_directory/layout.html" %}
 
 {% block content %}
 <form method="post">
     {% csrf_token %}
     Are you sure you want to delete "{{ object }}" ?
     <input type="submit" value="Submit" />
-    <a href="{% url "contacts:detail" pk=object.id %}">Cancel</a>
+    <a href="{% url "contacts:contact_detail" pk=object.id %}">Cancel</a>
 </form>
 {% endblock %}

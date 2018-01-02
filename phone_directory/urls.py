@@ -6,6 +6,7 @@ from phone_directory import settings
 
 urlpatterns = [
     url(r'^contacts/', include('contacts.urls')),
+    url(r'^', include('user_sessions.urls')),
     url(r'^admin/', admin.site.urls),
 ]
 

@@ -1,10 +1,9 @@
-from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic, View
 
-from contacts.forms import NewContactForm, LoginForm, NewAddressForm
+from contacts.forms import NewContactForm, NewAddressForm
 from .models import Contact, Address
 
 
@@ -34,7 +33,7 @@ class AddContactView(View):
             contact = form.save(commit=False)
             contact.user = request.user
             contact.save()
-            return HttpResponseRedirect(reverse('contacts:contact'))
+            return HttpResponseRedirect(reverse('contacts:contact_list'))
         return render(request, self.template_name, {'form': form})
 
 
@@ -62,6 +61,7 @@ class AddContactAddressView(View):
 
     def get(self, request):
         form = self.form_class()
+        form.fields.get('contact').queryset=Contact.objects.filter(user=request.user)
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
@@ -70,7 +70,7 @@ class AddContactAddressView(View):
             address = form.save(commit=False)
             address.user = request.user
             address.save()
-            return HttpResponseRedirect(reverse('contacts:contact'))
+            return HttpResponseRedirect(reverse('contacts:contact_list'))
         return render(request, self.template_name, {'form': form})
 
 
@@ -79,7 +79,7 @@ class UpdateContactView(generic.UpdateView):
     fields = ['name', 'email', 'phone_number', 'contact_image']
 
     def get_success_url(self):
-        return reverse('contacts:detail', kwargs={'pk': self.get_object().id})
+        return reverse('contacts:contact_detail', kwargs={'pk': self.get_object().id})
 
 
 class UpdateContactAddressView(generic.UpdateView):
@@ -87,7 +87,7 @@ class UpdateContactAddressView(generic.UpdateView):
     fields = ['address_selection', 'address_line', 'city', 'state', 'zip_code', 'country']
 
     def get_success_url(self):
-        return reverse('contacts:detail', kwargs={'pk': self.get_object().contact.id})
+        return reverse('contacts:contact_detail', kwargs={'pk': self.get_object().contact.id})
 
 
 class DeleteContactView(View):
@@ -99,43 +99,4 @@ class DeleteContactView(View):
     def post(self, request, pk):
         contact = Contact.objects.get(id=pk)
         contact.delete()
-        return HttpResponseRedirect(reverse('contacts:contact'))
-
-
-class LoginView(View):
-    form_class = LoginForm
-    template_name = 'contacts/login.html'
-
-    def get(self, request):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            un = form.cleaned_data['username']
-            pw = form.cleaned_data['password']
-            user = authenticate(username=un, password=pw)
-            if user:
-                login(request, user)
-                return HttpResponseRedirect(reverse('contacts:contact'))
-            else:
-                return render(request, self.template_name, {'form': form, 'error_message':
-                    "Invalid Username or Password. Please try again. "})
-        else:
-            return render(request, self.template_name, {'form': form})
-
-
-class HomePageView(View):
-    template_name = 'contacts/home.html'
-
-    def get(self, request):
-        return render(request, self.template_name)
-
-
-class LogoutView(View):
-    template_name = 'contacts/home.html'
-
-    def get(self, request):
-        logout(request)
-        return render(request, self.template_name)
+        return HttpResponseRedirect(reverse('contacts:contact_list'))
