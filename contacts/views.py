@@ -7,6 +7,7 @@ from contacts.forms import NewContactForm, NewAddressForm
 from .models import Contact, Address
 
 
+
 class ContactsListView(View):
     template_name = "contacts/contact_list.html"
 
