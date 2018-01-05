@@ -1,16 +1,13 @@
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic, View
-from django.utils.decorators import method_decorator
 
 from contacts.forms import NewContactForm, NewAddressForm
 from .models import Contact, Address
 
 
 
-@method_decorator(login_required, name='dispatch')
 class ContactsListView(View):
     template_name = "contacts/contact_list.html"
 
@@ -19,12 +16,10 @@ class ContactsListView(View):
         return render(request, self.template_name, {'user_specific_contacts': specific})
 
 
-@method_decorator(login_required, name='dispatch')
 class ContactDetailView(generic.DetailView):
     model = Contact
 
 
-@method_decorator(login_required, name='dispatch')
 class AddContactView(View):
     form_class = NewContactForm
     template_name = 'contacts/contact_form.html'
@@ -61,7 +56,6 @@ class AddContactView(View):
 #     success_url = reverse_lazy('contacts:contact')
 
 
-@method_decorator(login_required, name='dispatch')
 class AddContactAddressView(View):
     form_class = NewAddressForm
     template_name = 'contacts/address_form.html'
@@ -81,7 +75,6 @@ class AddContactAddressView(View):
         return render(request, self.template_name, {'form': form})
 
 
-@method_decorator(login_required, name='dispatch')
 class UpdateContactView(generic.UpdateView):
     model = Contact
     fields = ['name', 'email', 'phone_number', 'contact_image']
@@ -90,7 +83,6 @@ class UpdateContactView(generic.UpdateView):
         return reverse('contacts:contact_detail', kwargs={'pk': self.get_object().id})
 
 
-@method_decorator(login_required, name='dispatch')
 class UpdateContactAddressView(generic.UpdateView):
     model = Address
     fields = ['address_selection', 'address_line', 'city', 'state', 'zip_code', 'country']
@@ -99,7 +91,6 @@ class UpdateContactAddressView(generic.UpdateView):
         return reverse('contacts:contact_detail', kwargs={'pk': self.get_object().contact.id})
 
 
-@method_decorator(login_required, name='dispatch')
 class DeleteContactView(View):
     template_name = "contacts/delete_contact.html"
 
