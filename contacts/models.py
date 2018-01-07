@@ -15,6 +15,10 @@ class Contact(models.Model):
     phone_number = models.CharField(validators=[phone_regex], max_length=20, blank=True)
     contact_image = models.ImageField(upload_to='contacts_images', default='contacts_images/default.png')
 
+    class Meta:
+        verbose_name = 'Entry'
+        verbose_name_plural = 'Entries'
+
     def __str__(self):
         return self.name
 
