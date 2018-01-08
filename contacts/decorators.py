@@ -1,14 +1,14 @@
 from django.core.exceptions import PermissionDenied
 from .models import Contact
+from functools import wraps
 
 
-def user_is_entry_author(function):
-    def wrap(request, *args, **kwargs):
-        entry = Contact.objects.get(pk=kwargs['entry_id'])
-        if entry.user == request.user:
-            return function(request, *args, **kwargs)
+def user_added_contact(view_func):
+    def _decorator(request, *args, **kwargs):
+
+        if Contact.objects.get(pk=kwargs['contact_id'], user = request.user).exist():
+            return view_func(request, *args, **kwargs)
         else:
             raise PermissionDenied
-    wrap.__doc__ = function.__doc__
-    wrap.__name__ = function.__name__
-    return wrap
+
+    return wraps(view_func)(_decorator)

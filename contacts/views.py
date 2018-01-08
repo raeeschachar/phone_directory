@@ -1,8 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic, View
 
+from contacts.decorators import user_added_contact
 from contacts.forms import NewContactForm, NewAddressForm
 from .models import Contact, Address
 
@@ -16,6 +18,8 @@ class ContactsListView(View):
         return render(request, self.template_name, {'user_specific_contacts': specific})
 
 
+@login_required
+@user_added_contact
 class ContactDetailView(generic.DetailView):
     model = Contact
 
@@ -75,6 +79,7 @@ class AddContactAddressView(View):
         return render(request, self.template_name, {'form': form})
 
 
+@user_added_contact
 class UpdateContactView(generic.UpdateView):
     model = Contact
     fields = ['name', 'email', 'phone_number', 'contact_image']
@@ -83,6 +88,7 @@ class UpdateContactView(generic.UpdateView):
         return reverse('contacts:contact_detail', kwargs={'pk': self.get_object().id})
 
 
+@user_added_contact
 class UpdateContactAddressView(generic.UpdateView):
     model = Address
     fields = ['address_selection', 'address_line', 'city', 'state', 'zip_code', 'country']
@@ -91,6 +97,7 @@ class UpdateContactAddressView(generic.UpdateView):
         return reverse('contacts:contact_detail', kwargs={'pk': self.get_object().contact.id})
 
 
+@user_added_contact
 class DeleteContactView(View):
     template_name = "contacts/delete_contact.html"
 
