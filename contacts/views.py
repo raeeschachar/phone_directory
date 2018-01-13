@@ -17,6 +17,7 @@ class ContactsListView(View):
 
 class ContactDetailView(generic.DetailView):
     model = Contact
+    pk_url_kwarg = 'contact_id'
 
 
 class AddContactView(View):
@@ -78,25 +79,29 @@ class UpdateContactView(generic.UpdateView):
     model = Contact
     fields = ['name', 'email', 'phone_number', 'contact_image']
 
+    pk_url_kwarg = 'contact_id'
+
     def get_success_url(self):
-        return reverse('contacts:contact_detail', kwargs={'pk': self.get_object().id})
+        return reverse('contacts:contact_detail', kwargs={'contact_id': self.get_object().id})
 
 
 class UpdateContactAddressView(generic.UpdateView):
     model = Address
     fields = ['address_selection', 'address_line', 'city', 'state', 'zip_code', 'country']
 
+    pk_url_kwarg = 'address_id'
+
     def get_success_url(self):
-        return reverse('contacts:contact_detail', kwargs={'pk': self.get_object().contact.id})
+        return reverse('contacts:contact_detail', kwargs={'contact_id': self.get_object().contact.id})
 
 
 class DeleteContactView(View):
     template_name = "contacts/delete_contact.html"
 
-    def get(self, request, pk):
-        return render(request, self.template_name, {'object': Contact.objects.get(id=pk)})
+    def get(self, request, contact_id):
+        return render(request, self.template_name, {'object': Contact.objects.get(id=contact_id)})
 
-    def post(self, request, pk):
-        contact = Contact.objects.get(id=pk)
+    def post(self, contact_id):
+        contact = Contact.objects.get(id=contact_id)
         contact.delete()
         return HttpResponseRedirect(reverse('contacts:contact_list'))

@@ -5,6 +5,6 @@
     {% csrf_token %}
     Are you sure you want to delete "{{ object }}" ?
     <input type="submit" value="Submit" />
-    <a href="{% url "contacts:contact_detail" pk=object.id %}">Cancel</a>
+    <a href="{% url "contacts:contact_detail" contact_id=object.id %}">Cancel</a>
 </form>
 {% endblock %}
