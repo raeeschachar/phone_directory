@@ -4,7 +4,7 @@ from django.core.exceptions import PermissionDenied
 from .models import Contact, Address
 
 
-def user_added_contact(view_func):
+def user_has_permission(view_func):
     def _decorator(request, *args, **kwargs):
         if kwargs.get('contact_id') and \
                 Contact.objects.filter(pk=kwargs.get('contact_id'), user=request.user).exists():
