@@ -4,8 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 
-from user_sessions.forms import UserRegistrationForm
-from user_sessions.forms import LoginForm
+from user_sessions.forms import LoginForm, UserRegistrationForm
 
 
 class LoginView(View):
@@ -48,8 +47,8 @@ class LogoutView(View):
 
 class AddUserView(View):
 
-    template_name = 'user_sessions/register_user.html'
     form_class = UserRegistrationForm
+    template_name = 'user_sessions/register_user.html'
 
     def get(self, request):
         form = self.form_class()
@@ -58,7 +57,8 @@ class AddUserView(View):
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('login:login'))
+            user = form.save()
+            login(request, user)
+            return HttpResponseRedirect(reverse('contacts:contact_list'))
         else:
             return render(request, self.template_name, {'form': form})
