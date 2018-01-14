@@ -58,6 +58,11 @@ class AddUserView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('user_sessions:login'))
+            un = form.cleaned_data['username']
+            pw = form.cleaned_data['password1']
+            user = authenticate(username=un, password=pw)
+            if user:
+                login(request, user)
+                return HttpResponseRedirect(reverse('contacts:contact_list'))
         else:
             return render(request, self.template_name, {'form': form})
