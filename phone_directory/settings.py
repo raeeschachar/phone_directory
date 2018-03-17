@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'phone_directory.middleware.AutoLogout',
 ]
 
 ROOT_URLCONF = 'phone_directory.urls'
@@ -124,3 +125,5 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 LOGIN_URL = '/login'
+AUTO_LOGOUT_DELAY = 2
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
